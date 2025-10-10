@@ -1,234 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Restablecer contraseña | ImpulsaEDU</title>
 <style>
   :root{
-    --brand:#004F57;
-    --accent1:#FF7A00;
-    --accent2:#FF9E2C;
-    --bg:#f4f6f8;
-    --text:#263238;
-    --muted:#6b7a86;
-    --ok:#17b26a;
-    --warn:#f4a100;
-    --err:#e54848;
+    --brand:#004F57; --accent:#FF7A00; --accent2:#FF9E2C;
+    --bg:#f6f8fb; --card:#ffffff; --muted:#6b7a86; --ok:#17b26a; --err:#e54848;
   }
-
-  /* background */
+  /* Background */
   body{
-    margin:0;
-    font-family:'Segoe UI',Arial,system-ui,-apple-system,sans-serif;
-    color:var(--text);
-    min-height:100dvh;
-    background:
-      radial-gradient(80vw 60vh at -10% -20%, #ffeed6 0%, #ffffff00 55%),
-      radial-gradient(70vw 60vh at 120% 120%, #d7f5ff 0%, #ffffff00 55%),
-      linear-gradient(180deg, #fafcff 0%, #f6f7f9 100%);
-    display:grid;
-    place-items:center;
-    padding:24px;
+    margin:0; font-family:'Segoe UI',Arial,sans-serif; background:
+      radial-gradient(900px 600px at -10% -20%, #ffe8cc 0, #ffffff00 60%),
+      radial-gradient(850px 600px at 110% 120%, #d9f5ff 0, #ffffff00 55%),
+      linear-gradient(#f8fafc,#eef3f7);
+    min-height:100dvh; display:grid; place-items:center; padding:28px;
   }
-
-  /* card */
+  /* Card */
   .card{
-    width:min(880px,92vw);
-    border-radius:22px;
-    backdrop-filter:saturate(1.1) blur(6px);
-    background:rgba(255,255,255,.92);
-    box-shadow:0 18px 40px rgba(0,0,0,.08);
-    border:1px solid #eef0f3;
-    overflow:hidden;
-    animation:pop .5s ease;
+    width:min(720px,92vw); background:var(--card); border-radius:24px;
+    box-shadow:0 18px 45px rgba(0,0,0,.08); border:1px solid #eef1f4; overflow:hidden;
   }
-  @keyframes pop{from{transform:translateY(8px);opacity:.0}to{transform:none;opacity:1}}
-
-  .header{
-    display:flex; align-items:center; gap:14px;
-    padding:22px 26px;
-    background:linear-gradient(120deg,#ffffff 0%,#f9fbff 60%,#fef7ee 100%);
-    border-bottom:1px solid #eef0f3;
+  .head{
+    padding:26px 32px; display:flex; gap:16px; align-items:center;
+    background:linear-gradient(120deg,#fff 0,#fafcff 60%,#fff3e6 100%);
+    border-bottom:1px solid #eef1f4;
   }
   .logo{
-    width:56px; height:56px; object-fit:contain; border-radius:14px;
-    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.06); flex:0 0 auto;
+    width:64px; height:64px; border-radius:18px; display:grid; place-items:center;
+    background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.08); overflow:hidden; flex:0 0 64px;
+    font-weight:800; color:var(--brand);
   }
-  .title{
-    display:flex; flex-direction:column; gap:4px;
-  }
-  .title h1{
-    margin:0; color:var(--brand); font-size:26px; letter-spacing:.2px;
-  }
-  .subtitle{color:var(--muted); font-size:14.5px}
-
-  .content{
-    display:grid;
-    grid-template-columns: 1.2fr .9fr;
-    gap:30px;
-    padding:26px;
-  }
-  @media (max-width:900px){ .content{ grid-template-columns:1fr; } }
-
-  /* form */
-  .field{margin:12px 0}
-  .label{font-size:13px;color:#4a5b66;margin-bottom:6px}
+  .logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .title h1{ margin:2px 0 4px; color:var(--brand); font-size:28px; letter-spacing:.2px}
+  .title p{ margin:0; color:var(--muted); font-size:14.5px}
+  /* Body */
+  .body{ padding:28px 32px 22px}
+  .row{ display:flex; gap:14px; flex-wrap:wrap}
+  .col{ flex:1 1 320px}
+  .label{ font-size:13px; color:#475a64; margin:6px 0}
   .input{
-    position:relative;
-    display:flex; align-items:center;
-    border:1px solid #e2e6ea;
-    border-radius:12px; background:#fff;
-    padding:10px 12px;
+    display:flex; align-items:center; gap:10px; padding:12px 14px;
+    background:#fff; border:1px solid #e3e7eb; border-radius:12px;
     transition:border .2s, box-shadow .2s;
   }
-  .input:focus-within{
-    border-color:var(--accent1);
-    box-shadow:0 0 0 4px rgba(255,122,0,.14);
-  }
-  input[type="password"], input[type="text"]{
-    border:none; outline:none; width:100%;
-    font-size:15px; background:transparent;
-  }
-  .toggle{
-    user-select:none; cursor:pointer; font-size:13px; color:var(--brand);
-    padding:4px 8px; border-radius:8px;
-  }
+  .input:focus-within{ border-color:var(--accent); box-shadow:0 0 0 4px rgba(255,122,0,.14) }
+  .input input{ border:none; outline:none; width:100%; font-size:15px; background:transparent}
+  .input .icon{ width:18px; height:18px; color:#89a; opacity:.8}
+  .toggle{ cursor:pointer; font-size:12.5px; color:var(--brand); padding:4px 8px; border-radius:8px}
   .toggle:hover{ background:#eaf4f6 }
-
-  .hint{color:var(--muted); font-size:13px; margin-top:6px}
-
-  /* strength bar */
-  .strength{height:8px;border-radius:999px;background:#edf1f4;margin:10px 0; overflow:hidden}
-  .strength > span{display:block;height:100%;width:0;border-radius:inherit;transition:width .25s ease, background .25s ease}
-
-  /* checklist */
-  .checklist{list-style:none;padding:0;margin:12px 0 0 0}
-  .checklist li{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin:6px 0}
-  .dot{width:12px;height:12px;border-radius:50%;background:#d8dee4;flex:0 0 12px;transition:background .2s}
-  .ok .dot{background:var(--ok)} .warn .dot{background:var(--warn)} .bad .dot{background:var(--err)}
-  .ok{color:#1a7f55} .warn{color:#b57600} .bad{color:#b4232a}
-
-  /* button */
-  .actions{margin-top:16px;display:flex;gap:10px;align-items:center}
+  .hint{ color:#768793; font-size:13px; margin-top:6px }
+  /* Strength */
+  .strength{ height:8px; background:#edf1f4; border-radius:999px; overflow:hidden; margin:10px 0}
+  .strength span{ display:block; height:100%; width:0; background:#ffb74d; transition:width .25s, background .25s}
+  .checks{ list-style:none; padding:0; margin:10px 0 0}
+  .checks li{ display:flex; align-items:center; gap:8px; color:#6c7a86; font-size:14px; margin:6px 0}
+  .dot{ width:12px; height:12px; border-radius:50%; background:#d7dee5}
+  .ok .dot{ background:var(--ok)} .bad{ color:#b4232a } .bad .dot{ background:var(--err)}
+  /* Actions */
+  .actions{ margin-top:18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
   .btn{
-    appearance:none; border:none; cursor:pointer;
-    padding:12px 18px; border-radius:12px;
-    font-weight:700; color:#fff; font-size:16px;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    box-shadow:0 6px 18px rgba(255,122,0,.35);
-    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-    width:100%;
+    flex:1 1 220px; border:none; cursor:pointer; color:#fff; font-weight:700; font-size:16px;
+    padding:13px 18px; border-radius:12px; background:linear-gradient(90deg,var(--accent),var(--accent2));
+    box-shadow:0 8px 22px rgba(255,122,0,.35); transition:transform .15s, box-shadow .15s, filter .15s
   }
   .btn:hover{ transform:translateY(-1px); filter:saturate(1.05) }
-  .btn:active{ transform:translateY(0) }
-
-  .link{cursor:pointer;color:var(--brand);font-size:14px}
-
-  /* right panel */
-  .side{
-    background:linear-gradient(160deg,#fef9f2 0%,#f2fbff 100%);
-    border:1px dashed #e7e9ee;
-    border-radius:16px; padding:18px;
-  }
-  .side h3{margin:0 0 8px 0; color:#0f3b42}
-  .side p{margin:0 0 10px 0; color:#475a64; font-size:14px}
-  .pill{
-    display:inline-block; padding:6px 10px; font-size:12px;
-    border-radius:999px; background:#fff; border:1px solid #e8eff2; color:#48626c; margin:4px 6px 0 0
-  }
-
-  /* success overlay */
-  .overlay{
-    position:fixed; inset:0; display:none; place-items:center;
-    background:rgba(0,0,0,.45); backdrop-filter:blur(2px); z-index:10;
-  }
-  .success{
-    width:360px; background:#fff; border-radius:20px; padding:28px;
-    text-align:center; box-shadow:0 18px 40px rgba(0,0,0,.25);
-    animation:pop .35s ease;
-  }
-  .success h2{margin:10px 0 6px 0; color:#0b3b41}
-  .success p{margin:0;color:#64727c;font-size:14px}
-  /* animated check */
-  .check{
-    width:84px;height:84px;margin:0 auto 8px auto;border-radius:50%;
-    background:conic-gradient(from 0deg at 50% 50%, var(--ok) 0 360deg);
-    display:grid;place-items:center; box-shadow:0 6px 18px rgba(23,178,106,.35);
-  }
-  .check svg{width:48px;height:48px;stroke:#fff;stroke-width:6;fill:none;
-    stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray: 100; stroke-dashoffset: 100; animation:draw .8s .2s ease forwards;}
-  @keyframes draw{to{stroke-dashoffset:0}}
-
-  /* footer */
-  .foot{padding:10px 26px 22px;color:#8795a1;font-size:12px}
+  .link{ color:var(--brand); font-size:14px; cursor:pointer}
+  .foot{ padding:10px 32px 22px; color:#93a1ad; font-size:12px}
+  /* Success overlay */
+  .overlay{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.45); backdrop-filter:blur(2px); z-index:9 }
+  .box{ width:min(420px,90vw); background:#fff; border-radius:22px; padding:28px; text-align:center; box-shadow:0 18px 45px rgba(0,0,0,.25) }
+  .okBadge{ width:92px; height:92px; margin:0 auto 10px; border-radius:50%; background:conic-gradient(var(--ok) 0 360deg); display:grid; place-items:center; box-shadow:0 10px 26px rgba(23,178,106,.35) }
+  .okBadge svg{ width:52px; height:52px; stroke:#fff; stroke-width:6; fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100; animation:dash .8s .25s ease forwards}
+  @keyframes dash{ to{ stroke-dashoffset:0 } }
+  .box h2{ margin:8px 0 6px; color:#123940 }
+  .box p{ margin:0; color:#6b7a86; font-size:14px}
 </style>
 </head>
 <body>
+
   <div class="card">
-    <div class="header">
-      <img class="logo"
-           src="https://xlfcgtonpfvpiepxiuut.supabase.co/storage/v1/object/sign/make-91338777-profile-photos/c1ecdf9b-bc77-48de-b43d-90a3407baf8e-1760020639077.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zNDAwMjNlNi03ZDI5LTQ0YTAtYmU2ZC02ZjE5MmVhOThhNGMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTkxMzM4Nzc3LXByb2ZpbGUtcGhvdG9zL2MxZWNkZjliLWJjNzctNDhkZS1iNDNkLTkwYTM0MDdiYWY4ZS0xNzYwMDIwNjM5MDc3LnBuZyIsImlhdCI6MTc2MDA2MjcyMywiZXhwIjoxNzkxNTk4NzIzfQ.o76xMVEyaOx14rev4SMW2kX8HiXLRIXeR2un3f2Siwg"
-           alt="ImpulsaEDU"
-           onerror="this.src='https://via.placeholder.com/96x96?text=IE'">
+    <div class="head">
+      <div class="logo" title="ImpulsaEDU">
+        <img
+          src="https://xlfcgtonpfvpiepxiuut.supabase.co/storage/v1/object/sign/make-91338777-profile-photos/c1ecdf9b-bc77-48de-b43d-90a3407baf8e-1760020639077.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zNDAwMjNlNi03ZDI5LTQ0YTAtYmU2ZC02ZjE5MmVhOThhNGMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTkxMzM4Nzc3LXByb2ZpbGUtcGhvdG9zL2MxZWNkZjliLWJjNzctNDhkZS1iNDNkLTkwYTM0MDdiYWY4ZS0xNzYwMDIwNjM5MDc3LnBuZyIsImlhdCI6MTc2MDA2MjcyMywiZXhwIjoxNzkxNTk4NzIzfQ.o76xMVEyaOx14rev4SMW2kX8HiXLRIXeR2un3f2Siwg"
+          onerror="this.style.display='none'; this.parentElement.textContent='IE';"
+          alt="ImpulsaEDU">
+      </div>
       <div class="title">
         <h1>Restablecer contraseña</h1>
-        <span class="subtitle">Crea una nueva contraseña segura para tu cuenta.</span>
+        <p>Crea una nueva contraseña segura para tu cuenta.</p>
       </div>
     </div>
 
-    <div class="content">
-      <!-- form -->
-      <div>
-        <div class="field">
+    <div class="body">
+      <div class="row">
+        <div class="col">
           <div class="label">Nueva contraseña</div>
           <div class="input">
+            <svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A5,5 0 0,1 17,6V9H19A2,2 0 0,1 21,11V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V11A2,2 0 0,1 5,9H7V6A5,5 0 0,1 12,1M9,9H15V6A3,3 0 0,0 12,3A3,3 0 0,0 9,6V9Z"/></svg>
             <input id="p1" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
             <span class="toggle" id="t1">Mostrar</span>
           </div>
           <div class="strength"><span id="bar"></span></div>
-          <ul class="checklist" id="list">
-            <li id="c-len"  class="bad"><span class="dot"></span> Al menos 8 caracteres</li>
-            <li id="c-num"  class="bad"><span class="dot"></span> Incluye un número</li>
-            <li id="c-up"   class="bad"><span class="dot"></span> Una mayúscula</li>
-            <li id="c-sp"   class="bad"><span class="dot"></span> Un símbolo (!@#$…)</li>
+          <ul class="checks">
+            <li id="c-l"> <span class="dot"></span> Al menos 8 caracteres</li>
+            <li id="c-n"> <span class="dot"></span> Un número</li>
+            <li id="c-u"> <span class="dot"></span> Una mayúscula</li>
+            <li id="c-s"> <span class="dot"></span> Un símbolo (!@#$…)</li>
           </ul>
         </div>
 
-        <div class="field">
+        <div class="col">
           <div class="label">Confirmar contraseña</div>
           <div class="input">
+            <svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A5,5 0 0,1 17,6V9H19A2,2 0 0,1 21,11V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V11A2,2 0 0,1 5,9H7V6A5,5 0 0,1 12,1M9,9H15V6A3,3 0 0,0 12,3A3,3 0 0,0 9,6V9Z"/></svg>
             <input id="p2" type="password" placeholder="Repite tu contraseña" autocomplete="new-password">
             <span class="toggle" id="t2">Mostrar</span>
           </div>
-          <div class="hint" id="matchHint"></div>
-        </div>
+          <div class="hint" id="match"></div>
 
-        <div class="actions">
-          <button class="btn" id="save">Guardar nueva contraseña</button>
+          <div class="actions">
+            <button class="btn" id="save">Guardar nueva contraseña</button>
+            <span class="link" onclick="alert('Redirigir a iniciar sesión (demo)')">Volver al inicio de sesión</span>
+          </div>
         </div>
       </div>
-
-      <!-- side -->
-      <aside class="side">
-        <h3>Recomendaciones</h3>
-        <p>Para proteger tu cuenta en <strong>ImpulsaEDU</strong>:</p>
-        <div class="pill">No reutilices contraseñas</div>
-        <div class="pill">Activa 2FA si está disponible</div>
-        <div class="pill">Usa un gestor de contraseñas</div>
-        <div class="pill">Evita datos personales</div>
-      </aside>
     </div>
 
     <div class="foot">© 2025 ImpulsaEDU — Impulsando tu desarrollo educativo</div>
   </div>
 
-  <!-- SUCCESS OVERLAY -->
-  <div class="overlay" id="ok">
-    <div class="success">
-      <div class="check">
+  <!-- Éxito -->
+  <div class="overlay" id="done">
+    <div class="box">
+      <div class="okBadge">
         <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
       </div>
       <h2>¡Contraseña actualizada!</h2>
-      <p>Ahora
+      <p>Ahora puedes volver a iniciar sesión.</p>
+    </div>
+  </div>
+
+<script>
+  // Mostrar/ocultar
+  const p1 = document.getElementById('p1'), p2 = document.getElementById('p2');
+  document.getElementById('t1').onclick = () => { p1.type = p1.type==='password'?'text':'password'; event.target.textContent = p1.type==='password'?'Mostrar':'Ocultar'; };
+  document.getElementById('t2').onclick = () => { p2.type = p2.type==='password'?'text':'password'; event.target.textContent = p2.type==='password'?'Mostrar':'Ocultar'; };
+
+  // Fortaleza + checklist
+  const bar = document.getElementById('bar');
+  const row = id => document.getElementById(id);
+  const mark = (el, ok) => { el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); };
+  function compute(v){
+    const hasL = v.length>=8, hasN=/\d/.test(v), hasU=/[A-Z]/.test(v), hasS=/[^A-Za-z0-9]/.test(v);
+    mark(row('c-l'),hasL); mark(row('c-n'),hasN); mark(row('c-u'),hasU); mark(row('c-s'),hasS);
+    const score=[hasL,hasN,hasU,hasS].filter(Boolean).length;
+    bar.style.width=[0,25,50,75,100][score]+'%';
+    bar.style.background= score<=2 ? '#ffb74d' : (score===3?'#ff8a00':'#17b26a');
+    return score;
+  }
+  p1.addEventListener('input', e=>compute(e.target.value));
+
+  // Coincidencia
+  const match = document.getElementById('match');
+  function checkMatch(){ 
+    if(!p2.value){ match.textContent=''; return; }
+    if(p1.value===p2.value){ match.textContent='Coinciden ✅'; match.style.color='#1a7f55'; }
+    else{ match.textContent='No coinciden ❌'; match.style.color='#b4232a'; }
+  }
+  p2.addEventListener('input', checkMatch);
+
+  // Guardar (demo con animación)
+  document.getElementById('save').onclick = (e)=>{
+    e.preventDefault();
+    const s = compute(p1.value);
+    if(s<3){ alert('Tu contraseña es débil. Cumple al menos 3 requisitos.'); return; }
+    if(p1.value!==p2.value){ alert('Las contraseñas no coinciden.'); return; }
+    document.getElementById('done').style.display='grid';
+  };
+</script>
+</body>
+</html>
