@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Restablecer contraseña | ImpulsaEDU</title>
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;background:#f7f7f8;padding:24px}
+    .card{max-width:420px;margin:40px auto;background:#fff;border:1px solid #eee;border-radius:16px;padding:24px;box-shadow:0 4px 10px rgba(0,0,0,.05)}
+    h1{color:#004F57;font-size:22px;margin:0 0 12px}
+    .hint{color:#666;font-size:14px;margin-bottom:16px}
+    .row{margin:10px 0}
+    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}
+    button{padding:12px 18px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+    .btn{background:linear-gradient(90deg,#FF7A00,#FF9E2C);color:#fff;width:100%}
+    .msg{margin-top:12px;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Restablecer contraseña</h1>
+    <div id="status" class="hint">Verificando tu enlace…</div>
+
+    <form id="form" style="display:none">
+      <div class="row"><input id="p1" type="password" placeholder="Nueva contraseña" required /></div>
+      <div class="row"><input id="p2" type="password" placeholder="Confirmar contraseña" required /></div>
+      <div class="row"><button class="btn" type="submit">Guardar nueva contraseña</button></div>
+      <div id="msg" class="msg"></div>
+    </form>
+  </div>
+
+  <!-- Carga Supabase (sin modules para máxima compatibilidad) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://xlfcgtonpfvpiepxiuut.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsZmNndG9ucGZ2cGllcHhpdXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3NjAwNjksImV4cCI6MjA3NTMzNjA2OX0.yNjOx9CWl1ia_q6tM_wKwYZwBHdgqKHyYNwdX-GSgg0';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const statusEl = document.getElementById('status');
+    const formEl = document.getElementById('form');
+    const msgEl = document.getElementById('msg');
+
+    function getAuthFragment() {
+      if (location.hash && location.hash.length > 5) return location.hash;
+      const q = new URLSearchParams(location.search);
+      if (q.has('code')) return '#code=' + q.get('code');
+      const keys = ['access_token','refresh_token','type','expires_in'];
+      const parts = [];
+      keys.forEach(k => { if (q.has(k)) parts.push(k + '=' + q.get(k)); });
+      return parts.length ? '#' + parts.join('&') : '';
+    }
+
+    async function boot() {
+      try {
+        const frag = getAuthFragment();
+        if (!frag) { statusEl.textContent = 'Enlace inválido o expirado.'; return; }
+        const { error } = await client.auth.exchangeCodeForSession(frag);
+        if (error) throw error;
+        statusEl.textContent = 'Ingresa tu nueva contraseña.';
+        formEl.style.display = 'block';
+      } catch (e) {
+        statusEl.textContent = 'No se pudo validar el enlace: ' + (e?.message || e);
+      }
+    }
+
+    formEl.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const p1 = document.getElementById('p1').value.trim();
+      const p2 = document.getElementById('p2').value.trim();
+      if (p1 !== p2) { msgEl.textContent = 'Las contraseñas no coinciden.'; return; }
+      msgEl.textContent = 'Guardando…';
+      const { error } = await client.auth.updateUser({ password: p1 });
+      if (error) { msgEl.textContent = 'Error: ' + error.message; return; }
+      msgEl.textContent = '¡Listo! Contraseña actualizada. Ya puedes cerrar esta página.';
+    });
+
+    boot();
+  </script>
+</body>
+</html>
