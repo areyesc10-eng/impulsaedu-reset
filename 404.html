@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Redirigiendo…</title>
+  <script>
+  (function(){
+    try {
+      const base = '/impulsaedu-reset/';
+      if (location.pathname === base || location.pathname === base.slice(0,-1)) return;
+      const dest = base + (location.search || '') + (location.hash || '');
+      location.replace(dest);
+    } catch (e) {
+      location.replace('/impulsaedu-reset/');
+    }
+  })();
+  </script>
+  <style>body{font-family:system-ui,Segoe UI,Arial,sans-serif;text-align:center;padding:48px}</style>
+</head>
+<body>
+  <h1>Redirigiendo…</h1>
+  <p>Si no te redirige automáticamente, <a id="link" href="/impulsaedu-reset/">haz clic aquí</a>.</p>
+  <script>document.getElementById('link').href = '/impulsaedu-reset/' + (location.hash || '');</script>
+</body>
+</html>
