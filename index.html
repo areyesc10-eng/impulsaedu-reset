@@ -3,124 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ImpulsaEDU · Cambiar contraseña</title>
+  <title>ImpulsaEDU · Restablecer contraseña</title>
   <meta name="color-scheme" content="light dark">
   <style>
     :root{
-      --brand:#FF7A00;      /* naranja de acción */
-      --brand2:#FF9E2C;     /* variante para hover */
-      --bg:#F6F8FA;
-      --card:#FFFFFF;
-      --txt:#0F172A;
-      --muted:#64748B;
-      --line:#E5E7EB;
-      --focus:#2563EB;
+      --logo:110px;                 /* ← tamaño del logo */
+      --brand:#FF7A00; --brand2:#FF9E2C;
+      --bg:#F6F8FA; --card:#FFFFFF; --txt:#0F172A; --muted:#64748B; --line:#E5E7EB; --focus:#2563EB;
       --ok-bg:#ECFDF5; --ok-bd:#A7F3D0; --ok-tx:#065F46;
       --er-bg:#FEF2F2; --er-bd:#FECACA; --er-tx:#7F1D1D;
     }
     @media (prefers-color-scheme: dark){
       :root{
-        --bg:#0B0F14;
-        --card:#0F141A;
-        --txt:#E5E7EB;
-        --muted:#9AA4B2;
-        --line:#1F2937;
-        --focus:#60A5FA;
-        --ok-bg:#062E26; --ok-bd:#0B7A62; --ok-tx:#76FFD1;
-        --er-bg:#241417; --er-bd:#9A4A52; --er-tx:#FFB3B8;
+        --bg:#0B0F14; --card:#0F141A; --txt:#E5E7EB; --muted:#9AA4B2; --line:#1F2937; --focus:#60A5FA;
+        --ok-bg:#062E26; --ok-bd:#0B7A62; --ok-tx:#76FFD1; --er-bg:#241417; --er-bd:#9A4A52; --er-tx:#FFB3B8;
       }
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; padding:32px 16px; font-family:system-ui, Segoe UI, Arial, sans-serif;
-      color:var(--txt); background:var(--bg);
-    }
-
-    /* Contenedor y cabecera con logo */
+    body{margin:0; padding:32px 16px; font-family:system-ui, Segoe UI, Arial, sans-serif; color:var(--txt); background:var(--bg)}
     .wrap{max-width:560px;margin:0 auto}
-    .logo{
-      display:flex; justify-content:center; margin-bottom:20px;
-    }
-    .logo img{
-      height:56px; width:auto; object-fit:contain;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.05));
-    }
+    .logo{display:flex;justify-content:center;margin-bottom:22px}
+    .logo img{height:var(--logo);width:auto;object-fit:contain}
 
-    /* Tarjeta minimal */
-    .card{
-      background:var(--card); border:1px solid var(--line); border-radius:16px;
-      padding:22px; box-shadow:0 8px 20px rgba(2,6,23,.06);
-    }
+    .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px; box-shadow:0 8px 20px rgba(2,6,23,.06)}
+    h1.title{margin:0 0 8px;font-size:24px;line-height:1.2}
+    .muted{color:var(--muted);font-size:14px}
+    .row{margin:14px 0}
+    label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
 
-    /* Tipografía y espaciado */
-    h1.title{
-      margin:0 0 8px; font-size:24px; line-height:1.2;
-    }
-    .muted{ color:var(--muted); font-size:14px }
-    .row{ margin:14px 0 }
-    label{ display:block; font-size:13px; color:var(--muted); margin:0 0 6px }
+    .field{position:relative}
+    input[type=password],input[type=text]{width:100%;padding:12px 44px 12px 14px;border:1px solid #D1D5DB;border-radius:12px;font-size:16px;color:var(--txt);background:transparent;outline:none;transition:border .15s,box-shadow .15s,background .15s}
+    input::placeholder{color:#9AA4B2}
+    input:focus{border-color:var(--focus); box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 22%, transparent); background:rgba(99,102,241,.02)}
+    .toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;cursor:pointer;padding:6px 8px;border-radius:8px;font-size:16px;color:#94A3B8}
+    .toggle:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
-    /* Inputs */
-    input[type=password], input[type=text]{
-      width:100%; padding:12px 14px; border:1px solid #D1D5DB; border-radius:12px;
-      font-size:16px; color:var(--txt); background:transparent; outline:none;
-      transition:border .15s, box-shadow .15s, background .15s;
-    }
-    input::placeholder{ color:#9AA4B2 }
-    input:focus{
-      border-color:var(--focus);
-      box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
-      background:rgba(99,102,241,.02);
-    }
+    #btn{width:100%;padding:12px 16px;border:0;border-radius:999px;font-weight:700;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;cursor:pointer;font-size:16px;transition:transform .06s, box-shadow .2s; box-shadow:0 8px 18px rgba(255,122,0,.25)}
+    #btn:hover{transform:translateY(-1px); box-shadow:0 12px 24px rgba(255,122,0,.32)}
+    #btn:active{transform:translateY(0)}
 
-    /* Botón */
-    button#btn{
-      width:100%; padding:12px 16px; border:0; border-radius:999px; font-weight:700;
-      background:linear-gradient(90deg, var(--brand), var(--brand2)); color:#fff; cursor:pointer;
-      font-size:16px; transition:transform .06s ease, box-shadow .2s ease;
-      box-shadow:0 8px 18px rgba(255,122,0,.25);
-    }
-    button#btn:hover{ transform:translateY(-1px); box-shadow:0 12px 24px rgba(255,122,0,.32) }
-    button#btn:active{ transform:translateY(0) }
-
-    /* Estados */
-    .hidden{display:none}
-    .ok{ color:var(--ok-tx); background:var(--ok-bg); border:1px solid var(--ok-bd); padding:12px; border-radius:12px }
-    .err{ color:var(--er-tx); background:var(--er-bg); border:1px solid var(--er-bd); padding:12px; border-radius:12px }
+    .ok{color:var(--ok-tx);background:var(--ok-bg);border:1px solid var(--ok-bd);padding:12px;border-radius:12px}
+    .err{color:var(--er-tx);background:var(--er-bg);border:1px solid var(--er-bd);padding:12px;border-radius:12px}
     .center{text-align:center}
 
-    .state-check{ display:flex; align-items:center; gap:8px; color:var(--muted) }
-    .spinner{ width:16px; height:16px; border:2px solid #0000; border-top-color: currentColor; border-left-color: currentColor; border-radius:50%; animation:spin .7s linear infinite }
-    @keyframes spin{ to{ transform:rotate(360deg) } }
+    .state-check{display:flex;align-items:center;gap:8px;color:var(--muted)}
+    .spinner{width:16px;height:16px;border:2px solid #0000;border-top-color:currentColor;border-left-color:currentColor;border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    .foot{ margin-top:12px; color:var(--muted); font-size:12px }
+    .foot{margin-top:12px;color:var(--muted);font-size:12px}
+
+    /* ¡Importante! hidden gana siempre */
+    .hidden{display:none !important;}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- LOGO ARRIBA -->
+    <!-- Logo -->
     <div class="logo">
       <img src="https://xlfcgtonpfvpiepxiuut.supabase.co/storage/v1/object/public/make-91338777-profile-photos/c1ecdf9b-bc77-48de-b43d-90a3407baf8e-1760491065717.png" alt="ImpulsaEDU">
     </div>
 
-    <!-- TARJETA -->
     <div class="card" role="main">
       <h1 class="title">Restablecer contraseña</h1>
       <p class="muted">Ingresa tu nueva contraseña para tu cuenta de <b>ImpulsaEDU</b>.</p>
 
-      <div id="state-checking" class="row state-check">
+      <!-- Verificando: oculto de inicio -->
+      <div id="state-checking" class="row state-check hidden" aria-live="polite">
         <span class="spinner" aria-hidden="true"></span>
         <span>Verificando enlace de recuperación…</span>
       </div>
 
+      <!-- Formulario -->
       <div id="state-form" class="hidden" aria-live="polite">
         <div class="row">
           <label for="password">Nueva contraseña</label>
-          <input id="password" type="password" placeholder="••••••••" autocomplete="new-password" />
+          <div class="field">
+            <input id="password" type="password" placeholder="••••••••" autocomplete="new-password" />
+            <button type="button" class="toggle" data-toggle="password" aria-label="Mostrar u ocultar contraseña">👁️</button>
+          </div>
         </div>
+
         <div class="row">
           <label for="password2">Repite la nueva contraseña</label>
-          <input id="password2" type="password" placeholder="••••••••" autocomplete="new-password" />
+          <div class="field">
+            <input id="password2" type="password" placeholder="••••••••" autocomplete="new-password" />
+            <button type="button" class="toggle" data-toggle="password2" aria-label="Mostrar u ocultar contraseña">👁️</button>
+          </div>
         </div>
 
         <div id="msg" class="row hidden" role="alert"></div>
@@ -132,52 +100,67 @@
         </p>
       </div>
 
-      <div id="state-done" class="hidden ok" role="status">
-        ✅ Tu contraseña se actualizó correctamente. Ya puedes iniciar sesión.
-      </div>
-
+      <!-- Éxito / Error -->
+      <div id="state-done" class="hidden ok" role="status">✅ Tu contraseña se actualizó correctamente. Ya puedes iniciar sesión.</div>
       <div id="state-error" class="hidden err" role="alert"></div>
 
       <p class="muted center foot">© 2025 <b>ImpulsaEDU</b></p>
     </div>
   </div>
 
-  <!-- Supabase JS v2 (lógica intacta) -->
+  <!-- Supabase JS -->
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
     const SUPABASE_URL = 'https://xlfcgtonpfvpiepxiuut.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsZmNndG9ucGZ2cGllcHhpdXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3NjAwNjksImV4cCI6MjA3NTMzNjA2OX0.yNjOx9CWl1ia_q6tM_wKwYZwBHdgqKHyYNwdX-GSgg0';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const qs = (s) => document.querySelector(s);
-    const show = (id) => qs(id).classList.remove('hidden');
-    const hide = (id) => qs(id).classList.add('hidden');
-    const setMsg = (html, ok=false) => {
+    const qs = (s)=>document.querySelector(s);
+    const show=(id)=>qs(id).classList.remove('hidden');
+    const hide=(id)=>qs(id).classList.add('hidden');
+
+    // Estados controlados
+    const IDS = ['#state-checking', '#state-form', '#state-done', '#state-error'];
+    function setState(idToShow){ IDS.forEach(id=>hide(id)); if(idToShow) show(idToShow); }
+
+    // Toggle ver contraseña
+    function wireToggles(){
+      document.querySelectorAll('.toggle').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const id=btn.getAttribute('data-toggle');
+          const input=qs('#'+id);
+          const isPw=input.type==='password';
+          input.type=isPw?'text':'password';
+          btn.textContent=isPw?'🙈':'👁️';
+        });
+      });
+    }
+
+    // Flash de mensajes
+    const setMsg=(html,ok=false)=>{
       const el = qs('#msg');
       el.className = ok ? 'row ok' : 'row err';
-      el.innerHTML = html;
-      show('#msg');
+      el.innerHTML = html; show('#msg');
     };
 
-    // Lee tokens del hash
-    function getHashParams() {
-      const hash = window.location.hash || '';
-      const out = {};
-      hash.replace(/^#/, '').split('&').forEach(pair => {
-        const [k,v] = pair.split('=');
-        if (k) out[decodeURIComponent(k)] = decodeURIComponent(v || '');
+    // Hash de Supabase
+    function getHashParams(){
+      const hash=window.location.hash||''; const out={};
+      hash.replace(/^#/, '').split('&').forEach(pair=>{
+        const[k,v]=pair.split('=');
+        if(k) out[decodeURIComponent(k)] = decodeURIComponent(v||'');
       });
       return out;
     }
 
-    async function bootstrap() {
-      const params = getHashParams();
-      if (params.type !== 'recovery' || !params.access_token || !params.refresh_token) {
-        hide('#state-checking');
-        qs('#state-error').textContent = 'Enlace inválido o expirado. Solicita un nuevo correo de recuperación.';
-        show('#state-error');
-        return;
+    // Flujo principal
+    async function bootstrap(){
+      setState('#state-checking'); // mostrar solo ahora
+
+      const params=getHashParams();
+      if(!(params.type==='recovery' && params.access_token && params.refresh_token)){
+        qs('#state-error').textContent='Enlace inválido o expirado. Solicita un nuevo correo de recuperación.';
+        return setState('#state-error');
       }
 
       const { error } = await supabase.auth.setSession({
@@ -185,31 +168,37 @@
         refresh_token: params.refresh_token
       });
 
-      hide('#state-checking');
-
-      if (error) {
-        qs('#state-error').textContent = 'No se pudo validar el enlace. ' + (error.message || '');
-        show('#state-error');
-        return;
+      if(error){
+        qs('#state-error').textContent='No se pudo validar el enlace. ' + (error.message || '');
+        return setState('#state-error');
       }
 
-      show('#state-form');
+      setState('#state-form');
+      wireToggles();
+
+      // Fallback defensivo: nunca quedarse “pensando”
+      setTimeout(()=>{
+        const formVisible = !qs('#state-form').classList.contains('hidden');
+        const errVisible  = !qs('#state-error').classList.contains('hidden');
+        if(!formVisible && !errVisible){
+          qs('#state-error').textContent='El enlace no es válido o ha expirado.';
+          setState('#state-error');
+        }
+      }, 5000);
     }
 
     // Submit
-    qs('#btn').addEventListener('click', async () => {
-      hide('#msg');
+    qs('#btn').addEventListener('click', async ()=>{
+      hide('#msg'); hide('#state-checking');
       const p1 = qs('#password').value.trim();
       const p2 = qs('#password2').value.trim();
-
-      if (!p1 || p1.length < 8) { setMsg('La contraseña debe tener al menos 8 caracteres.'); return; }
-      if (p1 !== p2) { setMsg('Las contraseñas no coinciden.'); return; }
+      if(!p1 || p1.length<8) return setMsg('La contraseña debe tener al menos 8 caracteres.');
+      if(p1 !== p2)         return setMsg('Las contraseñas no coinciden.');
 
       const { error } = await supabase.auth.updateUser({ password: p1 });
-      if (error) { setMsg('No se pudo actualizar: ' + error.message); return; }
+      if(error) return setMsg('No se pudo actualizar: ' + error.message);
 
-      hide('#state-form');
-      show('#state-done');
+      setState('#state-done');
     });
 
     bootstrap();
