@@ -6,187 +6,211 @@
   <title>ImpulsaEDU · Cambiar contraseña</title>
   <style>
     :root{
-      --brand-1:#FF7A00;
-      --brand-2:#FF9E2C;
-      --bg:#f6f8fa;
-      --card:#ffffff;
-      --txt:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --ok-bg:#ecfdf5; --ok-bd:#a7f3d0; --ok-tx:#065f46;
-      --er-bg:#fef2f2; --er-bd:#fecaca; --er-tx:#7f1d1d;
-      --focus:#2563eb;
+      --brand-a:#FF7A00; --brand-b:#FF9E2C;
+      --bg:#F3F6FB; --card:#ffffff; --txt:#0F172A; --muted:#64748B; --line:#E2E8F0;
+      --ok-bg:#ECFDF5; --ok-bd:#A7F3D0; --ok-tx:#065F46;
+      --er-bg:#FEF2F2; --er-bd:#FECACA; --er-tx:#7F1D1D;
+      --focus:#2563EB;
     }
     @media (prefers-color-scheme: dark){
       :root{
-        --bg:#0b0f14;
-        --card:#0f141a;
-        --txt:#e5e7eb;
-        --muted:#9aa4b2;
-        --line:#1f2937;
-        --ok-bg:#062e26; --ok-bd:#0b7a62; --ok-tx:#76ffd1;
-        --er-bg:#241417; --er-bd:#9a4a52; --er-tx:#ffb3b8;
-        --focus:#60a5fa;
+        --bg:#0B0F14; --card:#0F141A; --txt:#E5E7EB; --muted:#9AA4B2; --line:#273245;
+        --ok-bg:#062E26; --ok-bd:#0B7A62; --ok-tx:#76FFD1;
+        --er-bg:#241417; --er-bd:#9A4A52; --er-tx:#FFB3B8;
+        --focus:#60A5FA;
       }
     }
     *{box-sizing:border-box}
     body{
+      margin:0;
       font-family: system-ui, Segoe UI, Arial, sans-serif;
-      background:linear-gradient(180deg, rgba(255,122,0,.06), transparent 30%), var(--bg);
-      margin:0; padding:24px;
       color:var(--txt);
+      background:
+        radial-gradient(1200px 500px at -200px -200px, rgba(255,122,0,.12), transparent 60%),
+        radial-gradient(900px 400px at 110% -100px, rgba(255,158,44,.12), transparent 60%),
+        var(--bg);
+      padding:24px;
     }
-    .wrap{max-width:720px;margin:0 auto}
+    .wrap{max-width:900px;margin:0 auto}
+
+    /* HERO */
     .hero{
-      background: linear-gradient(90deg,var(--brand-1),var(--brand-2));
-      border-radius:20px;
-      padding:22px 20px;
-      color:#fff;
-      display:flex; align-items:center; gap:14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      display:flex;align-items:center;gap:14px;
+      padding:18px 20px;margin:0 auto 16px;
+      max-width:720px;border-radius:20px;color:#fff;
+      background:linear-gradient(90deg,var(--brand-a),var(--brand-b));
+      box-shadow:0 12px 30px rgba(255,122,0,.28);
+      position:relative;overflow:hidden;
     }
-    .hero .logo{
-      width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.2);
-      display:grid;place-items:center;font-size:22px;backdrop-filter:blur(2px)
+    .hero:after{
+      content:""; position:absolute; right:-60px; top:-60px;
+      width:160px; height:160px; border-radius:50%;
+      background:rgba(255,255,255,.18); filter:blur(6px);
     }
-    .hero h1{font-size:18px;line-height:1.2;margin:0}
-    .hero p{margin:2px 0 0;opacity:.92;font-size:13px}
+    .badge{
+      width:48px;height:48px;border-radius:14px;
+      background:rgba(255,255,255,.22);
+      display:grid;place-items:center;font-size:24px;
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+    .hero h1{font-size:22px;line-height:1.15;margin:0}
+    .hero p{margin:2px 0 0;opacity:.95;font-size:13px}
+    .brand-pill{
+      margin-left:auto; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.36);
+      padding:6px 12px; border-radius:999px; font-size:12px;
+    }
 
+    /* CARD */
     .card{
-      max-width:520px; margin:16px auto 0;
-      background:var(--card); border:1px solid var(--line); border-radius:16px;
-      padding:22px; box-shadow: 0 10px 26px rgba(0,0,0,.08);
+      max-width:720px;margin:0 auto;background:var(--card);
+      border:1px solid var(--line); border-radius:20px;
+      padding:26px; box-shadow:0 10px 28px rgba(2,6,23,.08);
+      display:grid; grid-template-columns: 1fr 420px; gap:20px;
     }
-    .title{margin:4px 0 6px; color:var(--txt); font-size:20px}
-    .muted{ color:var(--muted); font-size:14px }
-    .row{ margin:16px 0 }
-    label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px}
+    @media (max-width:860px){ .card{grid-template-columns:1fr} }
 
-    .field{
-      position:relative;
+    .intro{
+      padding:10px 6px 10px 10px;
+    }
+    .intro h2{margin:0 0 8px;font-size:24px}
+    .intro p{margin:0;color:var(--muted);font-size:14px}
+    .divider{height:1px;background:var(--line);margin:16px 0 12px;display:none}
+    @media (max-width:860px){ .divider{display:block} }
+
+    .form{
+      background:linear-gradient(180deg, rgba(2,6,23,.03), transparent);
+      border:1px solid var(--line);
+      border-radius:16px; padding:18px;
+    }
+
+    .row{margin:14px 0}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+
+    .field{position:relative}
+    .icon{
+      position:absolute; left:10px; top:50%; transform:translateY(-50%);
+      font-size:18px; color:#94A3B8;
+      pointer-events:none;
     }
     input[type=password], input[type=text]{
-      width:100%; padding:12px 44px 12px 12px;
-      border:1px solid #d1d5db; border-radius:12px; font-size:16px; background:transparent; color:var(--txt);
-      outline:none; transition:border .2s, box-shadow .2s;
+      width:100%; padding:12px 44px 12px 36px;
+      border:1px solid #D1D5DB; border-radius:12px; font-size:16px; background:transparent; color:var(--txt);
+      outline:none; transition:border .2s, box-shadow .2s, background .2s;
+      box-shadow:0 1px 0 rgba(2,6,23,.02), inset 0 0 0 1000px transparent;
     }
-    input[type=password]:focus, input[type=text]:focus{
+    input::placeholder{color:#9AA4B2}
+    input:focus{
       border-color:var(--focus);
-      box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 24%, transparent);
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
+      background:rgba(99,102,241,.02);
     }
     .toggle{
       position:absolute; right:8px; top:50%; transform:translateY(-50%);
-      border:0; background:transparent; cursor:pointer; padding:6px; border-radius:8px;
-      color:var(--muted);
+      border:0;background:transparent;cursor:pointer;padding:6px;border-radius:8px;
+      color:#91A0B5;font-size:16px;
     }
-    .toggle:focus-visible{
-      outline:2px solid var(--focus); outline-offset:2px;
+    .toggle:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+
+    /* Button */
+    #btn{
+      width:100%; padding:14px 18px; border:0; border-radius:999px; font-weight:800; cursor:pointer;
+      background:linear-gradient(90deg,var(--brand-a),var(--brand-b)); color:#fff; font-size:16px;
+      box-shadow:0 12px 24px rgba(255,122,0,.28), inset 0 -2px 0 rgba(0,0,0,.12);
+      transition:transform .06s ease, box-shadow .2s ease, filter .2s ease;
+      letter-spacing:.2px;
     }
+    #btn:hover{ transform:translateY(-1px); box-shadow:0 14px 28px rgba(255,122,0,.35) }
+    #btn:active{ transform:translateY(0) }
 
-    .strength{height:8px; background:#e5e7eb; border-radius:999px; overflow:hidden}
-    .strength > span{display:block; height:100%; width:0; transition:width .3s}
-    .strength--1 > span{width:25%; background:#ef4444}
-    .strength--2 > span{width:50%; background:#f59e0b}
-    .strength--3 > span{width:75%; background:#10b981}
-    .strength--4 > span{width:100%; background:#22c55e}
+    .muted{color:var(--muted);font-size:13px}
+    .center{text-align:center}
+    .hidden{display:none}
 
-    button#btn{
-      width:100%; padding:12px; border:0; border-radius:999px; font-weight:700; cursor:pointer;
-      background: linear-gradient(90deg,var(--brand-1),var(--brand-2)); color:#fff;
-      transition: transform .06s ease, box-shadow .2s ease; font-size:16px;
-      box-shadow: 0 8px 18px rgba(255,122,0,.25);
-    }
-    button#btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(255,122,0,.32) }
-    button#btn:active{ transform: translateY(0) }
-
-    .hidden{ display:none }
     .ok{ color:var(--ok-tx); background:var(--ok-bg); border:1px solid var(--ok-bd); padding:12px; border-radius:12px }
     .err{ color:var(--er-tx); background:var(--er-bg); border:1px solid var(--er-bd); padding:12px; border-radius:12px }
-    .center{ text-align:center }
-    a{ color:#0ea5b7; text-decoration:none }
-    .state-check{ display:flex; align-items:center; gap:8px; color:var(--muted) }
-    .spinner{ width:16px; height:16px; border:2px solid #0000; border-top-color: currentColor; border-left-color: currentColor; border-radius:50%; animation:spin 700ms linear infinite }
+
+    .state-check{ display:flex; align-items:center; gap:10px; color:var(--muted) }
+    .spinner{ width:16px; height:16px; border:2px solid #0000; border-top-color: currentColor; border-left-color: currentColor; border-radius:50%; animation:spin .7s linear infinite }
     @keyframes spin{ to{ transform:rotate(360deg) } }
 
-    .foot{ margin-top:16px; color:var(--muted); font-size:12px }
-    .pill{display:inline-flex; align-items:center; gap:6px; background:#fff3; border:1px solid #fff6; color:#fff; padding:6px 10px; border-radius:999px; font-size:12px}
-    .sep{height:1px; background:var(--line); margin:18px 0}
+    .foot{margin-top:10px;color:var(--muted);font-size:12px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <!-- HERO -->
     <div class="hero" role="banner" aria-label="ImpulsaEDU">
-      <div class="logo" aria-hidden="true">🔐</div>
+      <div class="badge" aria-hidden="true">🔐</div>
       <div>
         <h1>Restablecer contraseña</h1>
-        <p>Define una nueva clave segura para continuar.</p>
+        <p>Crea una nueva clave para tu cuenta.</p>
       </div>
-      <span class="pill" style="margin-left:auto">ImpulsaEDU</span>
+      <div class="brand-pill">ImpulsaEDU</div>
     </div>
 
     <!-- CARD -->
     <div class="card" role="main">
-      <h2 class="title">Crea tu nueva contraseña</h2>
-      <p class="muted">Ingresa y confirma tu nueva contraseña para tu cuenta de <b>ImpulsaEDU</b>.</p>
+      <section class="intro">
+        <h2>Seguridad al centro</h2>
+        <p>Usa una contraseña larga y única. Recomendamos 12+ caracteres con mayúsculas, números y símbolo.</p>
+        <div class="divider"></div>
+      </section>
 
-      <div id="state-checking" class="row state-check">
-        <span class="spinner" aria-hidden="true"></span>
-        <span>Verificando enlace de recuperación…</span>
-      </div>
-
-      <div id="state-form" class="hidden" aria-live="polite">
-        <div class="row">
-          <label for="password">Nueva contraseña</label>
-          <div class="field">
-            <input id="password" type="password" placeholder="• • • • • • • •" autocomplete="new-password" />
-            <button type="button" class="toggle" aria-label="Mostrar u ocultar contraseña" data-toggle="password">👁️</button>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <div class="strength" id="meter"><span></span></div>
-            <div class="muted" id="meter-label" style="margin-top:6px;font-size:12px">Sugerencia: usa 12+ caracteres, mayúsculas, números y símbolo.</div>
-          </div>
+      <section class="form" aria-live="polite">
+        <div id="state-checking" class="row state-check">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>Verificando enlace de recuperación…</span>
         </div>
 
-        <div class="row">
-          <label for="password2">Repite la nueva contraseña</label>
-          <div class="field">
-            <input id="password2" type="password" placeholder="• • • • • • • •" autocomplete="new-password" />
-            <button type="button" class="toggle" aria-label="Mostrar u ocultar contraseña" data-toggle="password2">👁️</button>
+        <div id="state-form" class="hidden">
+          <div class="row">
+            <label for="password">Nueva contraseña</label>
+            <div class="field">
+              <span class="icon">🔒</span>
+              <input id="password" type="password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle" aria-label="Mostrar u ocultar contraseña" data-toggle="password">👁️</button>
+            </div>
           </div>
+
+          <div class="row">
+            <label for="password2">Repite la nueva contraseña</label>
+            <div class="field">
+              <span class="icon">✅</span>
+              <input id="password2" type="password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle" aria-label="Mostrar u ocultar contraseña" data-toggle="password2">👁️</button>
+            </div>
+          </div>
+
+          <div id="msg" class="row hidden" role="alert"></div>
+
+          <button id="btn">Actualizar contraseña</button>
+
+          <p class="muted center" style="margin-top:12px">
+            ¿Problemas con el enlace? Vuelve a solicitarlo desde la app.
+          </p>
         </div>
 
-        <div id="msg" class="row hidden" role="alert"></div>
+        <div id="state-done" class="hidden ok" role="status">
+          ✅ Tu contraseña se actualizó correctamente. Ya puedes iniciar sesión.
+        </div>
 
-        <button id="btn">Actualizar contraseña</button>
+        <div id="state-error" class="hidden err" role="alert"></div>
 
-        <div class="sep"></div>
-
-        <p class="muted center" style="margin-top:8px">
-          ¿Problemas con el enlace? Solicita uno nuevo desde la app.
-        </p>
-      </div>
-
-      <div id="state-done" class="hidden ok" role="status">
-        ✅ Tu contraseña se actualizó correctamente. Ya puedes iniciar sesión.
-      </div>
-
-      <div id="state-error" class="hidden err" role="alert"></div>
-
-      <p class="muted center foot">© 2025 <b>ImpulsaEDU</b></p>
+        <p class="muted center foot">© 2025 <b>ImpulsaEDU</b></p>
+      </section>
     </div>
   </div>
 
-  <!-- Supabase JS v2 desde un CDN ESM -->
+  <!-- JS (tu lógica intacta + solo UI para toggles) -->
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-    // 1) Configura tus credenciales (se mantiene tal cual)
     const SUPABASE_URL = 'https://xlfcgtonpfvpiepxiuut.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsZmNndG9ucGZ2cGllcHhpdXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3NjAwNjksImV4cCI6MjA3NTMzNjA2OX0.yNjOx9CWl1ia_q6tM_wKwYZwBHdgqKHyYNwdX-GSgg0';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Utilidades UI (se conservan)
     const qs = (s) => document.querySelector(s);
     const show = (id) => qs(id).classList.remove('hidden');
     const hide = (id) => qs(id).classList.add('hidden');
@@ -197,7 +221,6 @@
       show('#msg');
     };
 
-    // Toggle de visibilidad (nuevo, no afecta lógica)
     function wireToggles(){
       document.querySelectorAll('.toggle').forEach(btn=>{
         btn.addEventListener('click', ()=>{
@@ -210,33 +233,6 @@
       });
     }
 
-    // Medidor simple de fortaleza (solo UI)
-    function scorePass(p){
-      let s = 0;
-      if(p.length >= 8) s++;
-      if(/[A-Z]/.test(p)) s++;
-      if(/[0-9]/.test(p)) s++;
-      if(/[^A-Za-z0-9]/.test(p)) s++;
-      return s;
-    }
-    function wireMeter(){
-      const meter = qs('#meter');
-      const label = qs('#meter-label');
-      const onInput = ()=>{
-        const v = qs('#password').value || '';
-        const s = scorePass(v);
-        meter.className = 'strength strength--'+Math.max(1, s || 1);
-        label.textContent =
-          s<=1 ? 'Débil: agrega longitud' :
-          s===2 ? 'Aceptable: agrega números/símbolos' :
-          s===3 ? 'Buena: casi listo' :
-          'Fuerte: excelente';
-      };
-      qs('#password').addEventListener('input', onInput);
-      onInput();
-    }
-
-    // 2) Lee el hash de la URL (Supabase envía access/refresh token aquí)
     function getHashParams() {
       const hash = window.location.hash || '';
       const out = {};
@@ -249,16 +245,13 @@
 
     async function bootstrap() {
       const params = getHashParams();
-      // Esperamos: type=recovery, access_token, refresh_token
       if (params.type !== 'recovery' || !params.access_token || !params.refresh_token) {
         hide('#state-checking');
-        const msg = 'Enlace inválido o expirado. Solicita un nuevo correo de recuperación.';
-        qs('#state-error').textContent = msg;
+        qs('#state-error').textContent = 'Enlace inválido o expirado. Solicita un nuevo correo de recuperación.';
         show('#state-error');
         return;
       }
 
-      // 3) Establece la sesión de recuperación con los tokens que vienen en el hash
       const { error } = await supabase.auth.setSession({
         access_token: params.access_token,
         refresh_token: params.refresh_token
@@ -272,36 +265,22 @@
         return;
       }
 
-      // 4) Muestra el formulario para cambiar la contraseña
       show('#state-form');
       wireToggles();
-      wireMeter();
     }
 
-    // 5) Maneja el submit: supabase.auth.updateUser({ password })
     qs('#btn').addEventListener('click', async () => {
       hide('#msg');
       const p1 = qs('#password').value.trim();
       const p2 = qs('#password2').value.trim();
 
-      if (!p1 || p1.length < 8) {
-        setMsg('La contraseña debe tener al menos 8 caracteres.');
-        return;
-      }
-      if (p1 !== p2) {
-        setMsg('Las contraseñas no coinciden.');
-        return;
-      }
+      if (!p1 || p1.length < 8) { setMsg('La contraseña debe tener al menos 8 caracteres.'); return; }
+      if (p1 !== p2) { setMsg('Las contraseñas no coinciden.'); return; }
 
-      const { data, error } = await supabase.auth.updateUser({ password: p1 });
+      const { error } = await supabase.auth.updateUser({ password: p1 });
+      if (error) { setMsg('No se pudo actualizar: ' + error.message); return; }
 
-      if (error) {
-        setMsg('No se pudo actualizar: ' + error.message);
-        return;
-      }
-
-      hide('#state-form');
-      show('#state-done');
+      hide('#state-form'); show('#state-done');
     });
 
     bootstrap();
