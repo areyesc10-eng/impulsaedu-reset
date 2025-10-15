@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Redirigiendo…</title>
+  <title>ImpulsaEDU · Enlace no válido</title>
+  <meta name="color-scheme" content="light dark">
   <script>
   (function(){
     try {
@@ -16,11 +17,69 @@
     }
   })();
   </script>
-  <style>body{font-family:system-ui,Segoe UI,Arial,sans-serif;text-align:center;padding:48px}</style>
+  <style>
+    :root{
+      --brand-a:#FF7A00; --brand-b:#FF9E2C;
+      --bg:#F3F6FB; --card:#ffffff; --txt:#0F172A; --muted:#64748B; --line:#E2E8F0;
+      --ok-bg:#ECFDF5; --ok-bd:#A7F3D0; --ok-tx:#065F46;
+      --er-bg:#FEF2F2; --er-bd:#FECACA; --er-tx:#7F1D1D;
+      --focus:#2563EB;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0B0F14; --card:#0F141A; --txt:#E5E7EB; --muted:#9AA4B2; --line:#273245;
+        --ok-bg:#062E26; --ok-bd:#0B7A62; --ok-tx:#76FFD1;
+        --er-bg:#241417; --er-bd:#9A4A52; --er-tx:#FFB3B8;
+        --focus:#60A5FA;
+      }
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:40px; text-align:center;
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(900px 380px at -160px -160px, rgba(255,122,0,.12), transparent 60%),
+        radial-gradient(700px 320px at 110% -90px, rgba(255,158,44,.12), transparent 60%),
+        var(--bg);
+    }
+    .card{
+      max-width:480px;margin:60px auto;background:var(--card);
+      border:1px solid var(--line);border-radius:20px;padding:40px 28px;
+      box-shadow:0 14px 34px rgba(2,6,23,.10);position:relative;overflow:hidden;
+    }
+    .card::before{
+      content:"";position:absolute;inset:0 0 auto 0;height:80px;
+      background:linear-gradient(90deg,var(--brand-a),var(--brand-b));opacity:.12;
+    }
+    h1{
+      font-size:26px;line-height:1.2;margin:0 0 10px;color:#0F766E;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    h1::before{content:"🚫";font-size:28px}
+    p{color:var(--muted);font-size:15px;line-height:1.6;margin:8px 0 0}
+    a{
+      display:inline-block;margin-top:20px;padding:12px 28px;
+      border-radius:999px;font-weight:700;text-decoration:none;
+      background:linear-gradient(90deg,var(--brand-a),var(--brand-b));
+      color:#fff;box-shadow:0 10px 24px rgba(255,122,0,.25);
+      transition:transform .06s ease,box-shadow .2s ease;
+    }
+    a:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(255,122,0,.32)}
+    a:active{transform:translateY(0)}
+    footer{margin-top:24px;color:var(--muted);font-size:12px}
+  </style>
 </head>
 <body>
-  <h1>Redirigiendo…</h1>
-  <p>Si no te redirige automáticamente, <a id="link" href="/impulsaedu-reset/">haz clic aquí</a>.</p>
-  <script>document.getElementById('link').href = '/impulsaedu-reset/' + (location.hash || '');</script>
+  <div class="card">
+    <h1>Enlace no válido</h1>
+    <p>El enlace que abriste ya fue usado o ha expirado.<br>Te redirigiremos automáticamente al inicio del proceso de restablecimiento.</p>
+    <a id="link" href="/impulsaedu-reset/">Volver a ImpulsaEDU</a>
+    <footer>© 2025 <b>ImpulsaEDU</b></footer>
+  </div>
+  <script>
+    // Actualiza dinámicamente el hash si existe
+    document.getElementById('link').href = '/impulsaedu-reset/' + (location.hash || '');
+  </script>
 </body>
 </html>
