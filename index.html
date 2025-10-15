@@ -48,7 +48,9 @@
     input[type=password],input[type=text]{width:100%;padding:12px 44px 12px 14px;border:1px solid #D1D5DB;border-radius:12px;font-size:16px;color:var(--txt);background:transparent;outline:none;transition:border .15s,box-shadow .15s,background .15s}
     input::placeholder{color:#9AA4B2}
     input:focus{border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 22%, transparent);background:rgba(99,102,241,.02)}
-    .toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;cursor:pointer;padding:6px 8px;border-radius:8px;font-size:16px;color:#94A3B8}
+    .toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;cursor:pointer;padding:6px 8px;border-radius:8px}
+    .toggle img{width:22px;height:22px;opacity:0.8;transition:opacity .15s ease}
+    .toggle:hover img{opacity:1}
     .toggle:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
     #btn{width:100%;padding:12px 16px;border:0;border-radius:999px;font-weight:700;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;cursor:pointer;font-size:16px;transition:transform .06s,box-shadow .2s;box-shadow:0 8px 18px rgba(255,122,0,.25)}
@@ -85,7 +87,9 @@
           <label for="password">Nueva contraseña</label>
           <div class="field">
             <input id="password" type="password" placeholder="••••••••" autocomplete="new-password" />
-            <button type="button" class="toggle" data-toggle="password" aria-label="Mostrar u ocultar contraseña">👁️</button>
+            <button type="button" class="toggle" data-toggle="password" aria-label="Mostrar u ocultar contraseña">
+              <img class="icon-eye" src="https://img.icons8.com/fluency-systems-filled/24/visible.png" alt="Ver">
+            </button>
           </div>
         </div>
 
@@ -93,7 +97,9 @@
           <label for="password2">Repite la nueva contraseña</label>
           <div class="field">
             <input id="password2" type="password" placeholder="••••••••" autocomplete="new-password" />
-            <button type="button" class="toggle" data-toggle="password2" aria-label="Mostrar u ocultar contraseña">👁️</button>
+            <button type="button" class="toggle" data-toggle="password2" aria-label="Mostrar u ocultar contraseña">
+              <img class="icon-eye" src="https://img.icons8.com/fluency-systems-filled/24/visible.png" alt="Ver">
+            </button>
           </div>
         </div>
 
@@ -115,24 +121,33 @@
     const SUPABASE_URL = 'https://xlfcgtonpfvpiepxiuut.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsZmNndG9ucGZ2cGllcHhpdXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3NjAwNjksImV4cCI6MjA3NTMzNjA2OX0.yNjOx9CWl1ia_q6tM_wKwYZwBHdgqKHyYNwdX-GSgg0';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const qs = s => document.querySelector(s);
     const show = id => qs(id).classList.remove('hidden');
     const hide = id => qs(id).classList.add('hidden');
     const IDS = ['#state-checking','#state-form','#state-done','#state-error'];
     function setState(idToShow){IDS.forEach(id=>hide(id));if(idToShow)show(idToShow);}
-    function wireToggles(){
-      document.querySelectorAll('.toggle').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const id=btn.getAttribute('data-toggle');
-          const input=qs('#'+id);
-          const isPw=input.type==='password';
-          input.type=isPw?'text':'password';
-          btn.textContent=isPw?'🙈':'👁️';
+
+    // Toggle con iconos modernos
+    function wireToggles() {
+      document.querySelectorAll('.toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-toggle');
+          const input = qs('#' + id);
+          const img = btn.querySelector('img');
+          const isPw = input.type === 'password';
+          input.type = isPw ? 'text' : 'password';
+          img.src = isPw
+            ? 'https://img.icons8.com/fluency-systems-filled/24/invisible.png'
+            : 'https://img.icons8.com/fluency-systems-filled/24/visible.png';
+          img.alt = isPw ? 'Ocultar' : 'Ver';
         });
       });
     }
+
     const setMsg=(html,ok=false)=>{const el=qs('#msg');el.className=ok?'row ok':'row err';el.innerHTML=html;show('#msg');};
     function getHashParams(){const hash=window.location.hash||'';const out={};hash.replace(/^#/,'').split('&').forEach(p=>{const[k,v]=p.split('=');if(k)out[decodeURIComponent(k)]=decodeURIComponent(v||'');});return out;}
+
     async function bootstrap(){
       setState('#state-checking');
       const params=getHashParams();
@@ -145,9 +160,12 @@
         qs('#state-error').textContent='No se pudo validar el enlace. '+(error.message||'');
         return setState('#state-error');
       }
-      setState('#state-form');wireToggles();
+      setState('#state-form');
+      wireToggles();
+
       setTimeout(()=>{const formVisible=!qs('#state-form').classList.contains('hidden');const errVisible=!qs('#state-error').classList.contains('hidden');if(!formVisible&&!errVisible){qs('#state-error').textContent='El enlace no es válido o ha expirado.';setState('#state-error');}},5000);
     }
+
     qs('#btn').addEventListener('click',async()=>{
       hide('#msg');hide('#state-checking');
       const p1=qs('#password').value.trim(),p2=qs('#password2').value.trim();
@@ -157,6 +175,7 @@
       if(error)return setMsg('No se pudo actualizar: '+error.message);
       setState('#state-done');
     });
+
     bootstrap();
   </script>
 </body>
